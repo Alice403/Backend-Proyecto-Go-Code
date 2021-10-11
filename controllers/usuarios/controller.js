@@ -9,9 +9,9 @@ const queryAllUsers = (callback) =>{
 const crearUsuario = (datosUsuario,callback) => {
     if (
         Object.keys(datosUsuario).includes('nombre') &&
-        Object.keys(datosUsuario).includes('apellido') &&
-        Object.keys(datosUsuario).includes('estado') &&
-        Object.keys(datosUsuario).includes('tipo')
+        Object.keys(datosUsuario).includes('apellidos') &&
+        Object.keys(datosUsuario).includes('estado_usuario') &&
+        Object.keys(datosUsuario).includes('tipo_usuario')
     ) {
         const baseDeDatos = getDB();
         baseDeDatos.collection('usuarios').insertOne(datosUsuario, callback);
