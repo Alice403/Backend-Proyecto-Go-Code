@@ -6,6 +6,7 @@ const rutasUsuarios = Express.Router();
 
 const genericCallback = (res)=> (err,result)=>{
         if (err) {
+            console.log(err);
             res.status(500).send('Error consultando los usuarios');
         } else {
             res.json(result);
@@ -21,10 +22,9 @@ rutasUsuarios.route('/usuarios/registro').post((req, res) => {
     crearUsuario(req.body,genericCallback(res));
 });
 
-rutasUsuarios.route("/usuarios/editar").patch((req,res)=>{
+rutasUsuarios.route('/usuarios/editar').patch((req,res)=>{
     editarUsuario(req.body,genericCallback(res));
 });
-
 
 
 rutasUsuarios.route("/usuarios/eliminar").delete((req,res)=>{

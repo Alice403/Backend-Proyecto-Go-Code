@@ -21,13 +21,14 @@ const crearUsuario = (datosUsuario,callback) => {
 };
 
 const editarUsuario = (edicion,callback)=>{
-    const filtroUsuario = {_id: new ObjectId(edicion.id)};
-    delete edicion.id;
+    const filtroUsuario = {_id: new ObjectId(edicion._id)};
+    delete edicion._id;
     const operacion = {
         $set: edicion,
     }
     const baseDeDatos = getDB();
-    baseDeDatos.collection("usuarios").findOneAndUpdate(filtroUsuario,operacion,{upsert:true, returnOriginal: true}, callback)
+    console.log("error");
+    baseDeDatos.collection("usuarios").findOneAndUpdate(filtroUsuario,operacion,{upsert:true, returnOriginal: true}, callback);
 }
 
 const eliminarUsuario = (id,callback) => {

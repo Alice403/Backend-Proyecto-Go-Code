@@ -25,8 +25,8 @@ const crearVenta = (datosVentas,callback) => {
 };
 
 const editarVenta = (edicion,callback)=>{
-    const filtroVentas = {_id: new ObjectId(edicion.id)};
-    delete edicion.id;
+    const filtroVentas = {_id: new ObjectId(edicion._id)};
+    delete edicion._id;
     const operacion = {
         $set: edicion,
     }
