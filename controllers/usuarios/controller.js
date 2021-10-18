@@ -8,17 +8,8 @@ const queryAllUsers = (callback) =>{
 };
 
 const crearUsuario = (datosUsuario,callback) => {
-    if (
-        Object.keys(datosUsuario).includes('nombre') &&
-        Object.keys(datosUsuario).includes('apellidos') &&
-        Object.keys(datosUsuario).includes('estado_usuario') &&
-        Object.keys(datosUsuario).includes('tipo_usuario')
-    ) {
         const baseDeDatos = getDB();
         baseDeDatos.collection('usuarios').insertOne(datosUsuario, callback);
-    } else {
-        return "error";
-    }
 };
 
 /*Cambio realizado 16 OCT 21*/ 
@@ -38,19 +29,23 @@ const consultarOCrearUsuario = async( req, callback) =>{
 
         if(response){
             // 7.1. Si el usuario ya esta en la BD, devuelve la info del usuario
+            callback(err,response);
 
         }
 
         else {
             // 7.2.  si el usuario no esta en la bd, lo crea y devuelve la info
-        await crearUsuario(user,(err, respuesta)=>{
-                console.log('respuesta creacion',respuesta);
-            });
+            user.auth0ID = user._id;
+            delete user._id;
+            user.tipo_usuario = "Inactivo";
+            user.estado_usuario = "Pendiente";  
+            user.nombre = user.given_name;  
+            delete user.given_name;
+            user.apellidos = user.family_name;
+            delete user.family_name;
+        await crearUsuario(user,(err, respuesta)=> callback(err, user));
         }
     });
-
-
-
 };
 
 const editarUsuario = (edicion,callback)=>{
